@@ -19,7 +19,13 @@ CMD [ "--host=0.0.0.0"]
 FROM php:8.2-fpm-alpine
 WORKDIR /var/www
 RUN rm -rf /var/www/html
+
+# Alterado para adicionar o caminho do sistema
 COPY --from=stage1 /var/www/laravel .
+
+# link simbólico para acessar a public quando bater na html
+RUN ln -s public html
+
 RUN chown -R www-data:www-data /var/www
 EXPOSE 9000
 CMD [ "php-fpm" ]
